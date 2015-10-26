@@ -1,0 +1,18 @@
+{
+  "name": "hapijsm",
+  "version": "0.0.0",
+  "description": "hapijs",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm start"
+  },
+  "author": "anurag",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.3.4",
+    "hapi": "^11.0.2"
+  },
+  "devDependencies": {
+    "mongodb": "^2.0.46"
+  }
+}
