@@ -9,6 +9,10 @@ var insertuser = function (data, callback) {
     DaoManager.setData(models.users, data, callback);
 };
 
+var getdata =function(callback){ //console.log("userDAO");
+  DaoManager.getData(models.users,'','','',callback);
+};
+
 module.exports ={
-    insertuser:insertuser
+    insertuser:insertuser,getdata,
 }

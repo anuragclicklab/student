@@ -18,3 +18,14 @@ exports.setData = function (usermodel,data, callback) {
 
     });
 };
+
+exports.getData = function (model, query, projection, options, callback) {
+
+    model.find(query, projection, options, function (err, data) {
+        if (err) {
+            logger.error("Get Data", err);
+            return callback(err);
+        }
+        return callback(null, data);
+    });
+};

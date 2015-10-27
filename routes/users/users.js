@@ -29,6 +29,23 @@ var createuser = { method:'GET',
     }
 }
 
+ var userlist = { method:'GET',
+     path:'/userlist',
+     config:{
+     description:'user list',
+     handler:function(error,reply){
+         //console.log("kjhkjhkj");
+         //reply("userlist");
+         controller.user.userlist(function (error,sucess){
+            if(error)
+              reply(error);
+            else
+             reply(sucess);
+         });
+       }
+     }
+ }
 
-var abc = [createuser];
+
+var abc = [createuser,userlist];
 module.exports = abc;
