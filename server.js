@@ -4,7 +4,7 @@ var path = require('path');
 var server = new hapi.Server();
 var Ejs = require('ejs');
 var mongoose = require('mongoose');
-server.connection({ port: 3200 });
+server.connection({ port: 5200 });
 
 server.route({
     method: 'GET',
@@ -13,6 +13,12 @@ server.route({
         reply('Hello, world!');
     }
 });
+
+
+routes.forEach(function (api) {
+    server.route(api);
+});
+
 //console.log('sdas');
 server.start(function () {
     console.log('Server running at:', server.info.uri);
