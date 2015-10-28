@@ -32,7 +32,28 @@ var userlist= function(callbackRoute){
     });
 
 }
+var userupdate = function(data,callbackRoute){
+    //562f3d78d734b9ba37eac961
+    var conditions = { id: '562f3d78d734b9ba37eac961' }
+    var data       = { phoneNumber:'9988842200'};
+
+    async.waterfall([
+        function (callback)
+        {
+            DAO.userDAO.update(conditions,data,callback); //
+             //return callbackRoute(null,"controller");
+        }
+
+    ],function(error,res){
+        if(error)
+          return callbackRoute(error);
+        else
+         return callbackRoute(null,"controller");
+    });
+
+}
 
 module.exports = {
-    createuser: createuser,userlist
+    createuser: createuser,
+    userlist:userlist,userupdate:userupdate
 }

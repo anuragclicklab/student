@@ -1,5 +1,4 @@
 /** Insert Data **/
-
 exports.setData = function (usermodel,data, callback) {
     //console.log("DAo");
     //console.log(model);
@@ -18,7 +17,7 @@ exports.setData = function (usermodel,data, callback) {
 
     });
 };
-
+/** fetch data **/
 exports.getData = function (model, query, projection, options, callback) {
 
     model.find(query, projection, options, function (err, data) {
@@ -27,5 +26,20 @@ exports.getData = function (model, query, projection, options, callback) {
             return callback(err);
         }
         return callback(null, data);
+    });
+};
+/** update **/
+exports.update_data = function (model, conditions, update, options, callback) {
+    model.update(conditions, update, options, function (err, result) {
+        if (err) {
+            //logger.error("Update Query: ", err);
+            return callback(err);
+        }else{
+            console.log("result staretr");
+            console.log(result);
+         callback(null,result);
+            console.log("result end");
+        //return callback(null, result);
+        }
     });
 };

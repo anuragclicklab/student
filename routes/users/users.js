@@ -46,6 +46,21 @@ var createuser = { method:'GET',
      }
  }
 
-
-var abc = [createuser,userlist];
+var updateuser = { method:'GET',
+    path:'/update',
+    config:{
+           description:'update user data',
+           handler: function(error,reply)
+           {
+             controller.user.userupdate("ss",function(error,sucess){
+                   if (error)
+                       reply(error);
+                   else
+                       reply(sucess);
+               });
+               //reply("asdsaadasd");
+           }
+    }
+}
+var abc = [createuser,userlist,updateuser];
 module.exports = abc;

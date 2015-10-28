@@ -8,7 +8,7 @@ var user = new Schema({
     password: {type: String, required: true, select: false, unique: false},
     fullAddress: {type: String,unique: false},
     status: {type: String, enum: ['Enabled','Disabled']},
-    createdAt: {type: Date, required: false}
+    createdAt: {type: Date, default: Date.now}
 });
 
 module.exports = mongoose.model('users', user);
