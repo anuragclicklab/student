@@ -4,7 +4,7 @@ var path = require('path');
 var server = new hapi.Server();
 var Ejs = require('ejs');
 var mongoose = require('mongoose');
-server.connection({ port: 5100 });
+server.connection({ port: 2000 });
 
 server.route({
     method: 'GET',

@@ -32,11 +32,7 @@ var userlist= function(callbackRoute){
     });
 
 }
-var userupdate = function(data,callbackRoute){
-    //562f3d78d734b9ba37eac961
-    var conditions = { id: '562f3d78d734b9ba37eac961' }
-    var data       = { phoneNumber:'9988842200'};
-
+var userupdate = function(conditions,data,callbackRoute){
     async.waterfall([
         function (callback)
         {
@@ -48,7 +44,7 @@ var userupdate = function(data,callbackRoute){
         if(error)
           return callbackRoute(error);
         else
-         return callbackRoute(null,"controller");
+         return callbackRoute(null,res);
     });
 
 }

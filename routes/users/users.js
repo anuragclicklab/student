@@ -46,19 +46,22 @@ var createuser = { method:'GET',
      }
  }
 
-var updateuser = { method:'GET',
+ var updateuser = { method:'GET',
     path:'/update',
     config:{
            description:'update user data',
-           handler: function(error,reply)
+           handler: function(request,reply)
            {
-             controller.user.userupdate("ss",function(error,sucess){
+               //562f3d78d734b9ba37eac961
+               var conditions = { "_id": request.query.id }
+               var data       = { "phoneNumber":request.query.phoneNumber};
+              controller.user.userupdate(conditions,data,function(error,sucess){
                    if (error)
                        reply(error);
                    else
                        reply(sucess);
                });
-               //reply("asdsaadasd");
+               //reply(request.query.id);
            }
     }
 }

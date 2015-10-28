@@ -31,15 +31,28 @@ exports.getData = function (model, query, projection, options, callback) {
 /** update **/
 exports.update_data = function (model, conditions, update, options, callback) {
     model.update(conditions, update, options, function (err, result) {
+        console.log(err);
         if (err) {
             //logger.error("Update Query: ", err);
             return callback(err);
         }else{
-            console.log("result staretr");
-            console.log(result);
-         callback(null,result);
-            console.log("result end");
+
+         return callback(null,result);
+            //console.log("result end");
         //return callback(null, result);
         }
     });
 };
+
+exports.findOneAndUpdateData = function (model, conditions, update, options, callback) {
+    model.findOneAndUpdate(conditions, update, options, function (error, result) {
+        console.log(error);
+        if (error) {
+         return callback(error);
+        }else{
+        return callback(null, result);
+        }
+    })
+};
+
+//findOneAndUpdate

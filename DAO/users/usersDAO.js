@@ -13,9 +13,14 @@ var getdata =function(callback){ //console.log("userDAO");
   DaoManager.getData(models.users,'','','',callback);
 };
 
-var update =function(condition,data,option,callback){ //console.log("usserDAo",condition);
-    var options    = { multi: true };
-    DaoManager.update_data(models.users,data,condition,options,callback);
+var update =function(condition,data,callback){ //console.log("usserDAo",condition);
+    var options    = {};
+    DaoManager.update_data(models.users,condition,data,options,callback);
+    console.log(data);
+    console.log(condition);
+
+    //DaoManager.findOneAndUpdateData(models.users,data,condition,options,callback);
+
 };
 
 module.exports ={
