@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = [
-    require('./users/users')
+    require('./users/users'),
+    require('./login/login')
 
 ];

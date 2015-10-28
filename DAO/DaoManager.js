@@ -33,17 +33,13 @@ exports.update_data = function (model, conditions, update, options, callback) {
     model.update(conditions, update, options, function (err, result) {
         console.log(err);
         if (err) {
-            //logger.error("Update Query: ", err);
             return callback(err);
         }else{
-
-         return callback(null,result);
-            //console.log("result end");
-        //return callback(null, result);
+          return callback(null,result);
         }
     });
 };
-
+/** find and update **/
 exports.findOneAndUpdateData = function (model, conditions, update, options, callback) {
     model.findOneAndUpdate(conditions, update, options, function (error, result) {
         console.log(error);
@@ -53,6 +49,28 @@ exports.findOneAndUpdateData = function (model, conditions, update, options, cal
         return callback(null, result);
         }
     })
+};
+/** Delete Data  **/
+exports.deleteData = function (model, conditions, callback) {
+   model.remove(conditions, function (err, removed) {
+        if(err) {
+          return callback(err);
+        }else{
+          return callback(null, removed);
+        }
+   });
+};
+
+exports.deleteData_one = function (model, conditions, callback1) {
+    model.remove = function remove (conditions, callback) {
+        if ('function' === typeof conditions) {
+            callback = conditions;
+            conditions = {};
+        }
+        // get the mongodb collection object
+        var mq = new Query({}, {}, this, this.collection);
+        return mq.remove(callback);
+    };
 };
 
 //findOneAndUpdate

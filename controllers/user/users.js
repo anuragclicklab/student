@@ -48,8 +48,26 @@ var userupdate = function(conditions,data,callbackRoute){
     });
 
 }
+var delete_user = function(conditions ,callbackRoute){
+    async.waterfall([
+    function (callback)
+    {
+       DAO.userDAO.delete_user(conditions,callbackRoute);
+        //return callbackRoute(null,"controller");
+    }
+    ],function(error,res){
+          if(error)
+            return callbackRoute(error);
+          else
+             return callbackRoute(null,"cccc");
+    });
+
+}
 
 module.exports = {
     createuser: createuser,
-    userlist:userlist,userupdate:userupdate
+    userlist:userlist,
+    userupdate:userupdate,
+    delete_user:delete_user,
+
 }

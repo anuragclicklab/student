@@ -64,6 +64,25 @@ var createuser = { method:'GET',
                //reply(request.query.id);
            }
     }
-}
-var abc = [createuser,userlist,updateuser];
+};
+
+ var delete_data = { method:'GET',
+     path:'/deleteuser',
+     config:{
+             description :'Delete user ',
+             handler:function(request,reply)
+             { var conditions={'_id':request.query.id};
+                 //console.log("route",request.query);
+               controller.user.delete_user(conditions,function(error,sucess){
+                  if(error)
+                    reply(error);
+                  else
+                    reply(sucess);
+               });
+                   //reply("asdsads");
+             }
+     }
+
+ }
+var abc = [createuser,userlist,updateuser,delete_data];
 module.exports = abc;

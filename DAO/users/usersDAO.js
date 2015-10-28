@@ -15,14 +15,15 @@ var getdata =function(callback){ //console.log("userDAO");
 
 var update =function(condition,data,callback){ //console.log("usserDAo",condition);
     var options    = {};
-    DaoManager.update_data(models.users,condition,data,options,callback);
-    console.log(data);
-    console.log(condition);
-
-    //DaoManager.findOneAndUpdateData(models.users,data,condition,options,callback);
-
+    //DaoManager.update_data(models.users,condition,data,options,callback);
+    DaoManager.findOneAndUpdateData(models.users,condition,data,options,callback);
 };
 
+var delete_record = function(conditions,callback){
+       DaoManager.deleteData(models.users,conditions,callback);
+       //callback(null,"userDAO");
+}
+
 module.exports ={
-    insertuser:insertuser,getdata:getdata,update:update
+    insertuser:insertuser,getdata:getdata,update:update,delete_user:delete_record
 }
