@@ -2,6 +2,7 @@
 
 module.exports = [
     require('./users/users'),
-    require('./login/login')
+    require('./login/login'),
+    require('./category/category'),
 
 ];

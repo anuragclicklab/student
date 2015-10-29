@@ -1,24 +1,19 @@
 /** Insert Data **/
 exports.setData = function (usermodel,data, callback) {
-    //console.log("DAo");
-    //console.log(model);
     new usermodel(data).save(function (err, resultData) {
-
         if (err) {
            console.log("error"+err);
            // logger.error("SET DATA: ", err);
             return callback(err);
         }
-
         var result = resultData.toObject();
-       console.log(result._id);
-        //delete result.__v;
-        //callback(null, result);
-
+        var cv ={'id':result._id,'password':result.password}
+        //console.log("dd",cv); //delete result.__v;
+        callback(null, result);
     });
 };
 /** fetch data **/
-exports.getData = function (model, query, projection, options, callback) {
+exports.getData = function (model, query, projection, options, callback) { //console.log("DAO",model);
 
     model.find(query, projection, options, function (err, data) {
         if (err) {
@@ -26,6 +21,17 @@ exports.getData = function (model, query, projection, options, callback) {
             return callback(err);
         }
         return callback(null, data);
+    });
+};
+
+/** fetch data **/
+exports.getData_conditions = function (model, conditions1,callback) { //console.log("DAO",conditions1);
+     model.find({$and:conditions1}, function(err,docs) {
+        if(err)
+            return callback(err);
+        else
+            console.log("DAOcc",docs);
+         callback(null,docs)
     });
 };
 /** update **/
@@ -50,6 +56,7 @@ exports.findOneAndUpdateData = function (model, conditions, update, options, cal
         }
     })
 };
+
 /** Delete Data  **/
 exports.deleteData = function (model, conditions, callback) {
    model.remove(conditions, function (err, removed) {

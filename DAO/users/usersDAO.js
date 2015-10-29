@@ -5,8 +5,8 @@ var models = require('../../Models');
 
 
 var insertuser = function (data, callback) {
-    //console.log("insert");
-    DaoManager.setData(models.users, data, callback);
+    //console.log("insert",data);//return callback(null,data);
+   DaoManager.setData(models.users, data, callback);
 };
 
 var getdata =function(callback){ //console.log("userDAO");

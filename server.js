@@ -5,7 +5,11 @@ var server = new hapi.Server();
 var Ejs = require('ejs');
 var mongoose = require('mongoose');
 var Plugins = require('./plugins');
+var jwt= require('hapi-auth-jwt2');
 server.connection({ port: 2000 });
+
+var privateKey = 'BbZJjyoXAdr8BUZuiKKARWimKfrSmQ6fv8kZ7OFfc';
+// Plugins, register hapi-auth-jwt to server
 server.register(Plugins, function (err) {
     if (err) {
         server.error('Error while loading plugins : ' + err)
@@ -20,16 +24,20 @@ server.route({
         reply('Hello, world!');
     }
 });
-
-
 routes.forEach(function (api) {
     server.route(api);
 });
-//console.log('sdas');
+//console.log(cipherToken);
 server.start(function () {
     console.log('Server running at:', server.info.uri);
+    //console.log("aasas",server.auth.default('jwt'));
     mongoose.connect('mongodb://localhost/Userdata');
 });
+
+var cipherToken = function (tokenData) {
+    return jwt.sign(tokenData, privateKey);
+};
+
 server.views({
     engines: {
         ejs: require('handlebars')

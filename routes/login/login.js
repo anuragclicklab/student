@@ -6,8 +6,25 @@ var login = {
              config:{
                  description:'login view',
                  handler:function(error,reply){
-                     reply("asdsadasd");
+                     reply.view('login/login.ejs'); //reply("asdsadasd");
                  }
              }
 }
-module.exports=[login];
+
+var auth ={
+            method:'POST',
+            path:'/auth',
+            config:{
+                description:'check users details',
+                handler:function(request,reply) {
+                    //console.log("ddd",request.payload);//reply(request.payload);
+                    controller.login.auth(request.payload,function(error,success){
+                       if(error)
+                         return reply(error);
+                       else
+                         return reply(success);
+                    });
+                }
+            }
+}
+module.exports=[login,auth];
