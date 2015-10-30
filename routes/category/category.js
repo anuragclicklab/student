@@ -1,4 +1,4 @@
- var controller = require('../../controllers');
+var controller = require('../../controllers');
 var insertcategory = { method:'GET',
     path:'/insertcategory',
     config:{
@@ -29,6 +29,25 @@ var insertcategory = { method:'GET',
     }
 }
 
+var insertsubcategories = { method:'GET',
+    path:'/insertsubcategories',
+    config:{
+        description:'insert category into db',
+        handler: function(request,reply){
+            //console.log("fjdwbkgfdsg",request.query);
+            //reply("insertsubcategories");
+            controller.category.insertsubcategories(request.query, function (error, success) {
+                if (error)
+                {
+                    reply(error);
+                }else {
+                    reply(success);
+                }
+            });
+        }
+    }
+}
+
  var category = { method:'GET',
      path:'/categorylist',
      config:{
@@ -45,44 +64,40 @@ var insertcategory = { method:'GET',
        }
      }
  }
-/*
- var updateuser = { method:'GET',
-    path:'/update',
+
+var subcategorieslist = { method:'GET',
+    path:'/subcategorieslist',
     config:{
-           description:'update user data',
-           handler: function(request,reply)
-           {
-               //562f3d78d734b9ba37eac961
-               var conditions = { "_id": request.query.id }
-               var data       = { "phoneNumber":request.query.phoneNumber};
-              controller.user.userupdate(conditions,data,function(error,sucess){
-                   if (error)
-                       reply(error);
-                   else
-                       reply(sucess);
-               });
-               //reply(request.query.id);
-           }
-    }
-};
-
- var delete_data = { method:'GET',
-     path:'/deleteuser',
-     config:{
-             description :'Delete user ',
-             handler:function(request,reply)
-             { var conditions={'_id':request.query.id};
-                 //console.log("route",request.query);
-               controller.user.delete_user(conditions,function(error,sucess){
-                  if(error)
+        description:'category list',
+        handler:function(error,reply){
+            //console.log("kjhkjhkj");
+            //reply("userlist");
+            controller.category.subcategorieslist(function (error,sucess){
+                if(error)
                     reply(error);
-                  else
+                else
                     reply(sucess);
-               });
-                   //reply("asdsads");
-             }
-     }
+            });
+        }
+    }
+}
 
- }*/
-var abc = [insertcategory,category];
+var allcategory = { method:'GET',
+    path:'/allcategory',
+    config:{
+        description:'category list',
+        handler:function(error,reply){
+            //console.log("kjhkjhkj");
+            //reply("userlist");
+            controller.category.allcategory(function (error,sucess){
+                if(error)
+                    reply(error);
+                else
+                    reply(sucess);
+            });
+        }
+    }
+}
+
+var abc = [insertcategory,category,insertsubcategories,subcategorieslist,allcategory];
 module.exports = abc;

@@ -1,15 +1,12 @@
 /** Insert Data **/
-exports.setData = function (usermodel,data, callback) {
+exports.setData = function (usermodel,data, callback) { //return callback(null,"sadasas");
     new usermodel(data).save(function (err, resultData) {
-        if (err) {
-           console.log("error"+err);
-           // logger.error("SET DATA: ", err);
+        if(err)
             return callback(err);
-        }
-        var result = resultData.toObject();
-        var cv ={'id':result._id,'password':result.password}
-        //console.log("dd",cv); //delete result.__v;
-        callback(null, result);
+        else
+           var result = resultData.toObject();
+           var cv ={'id':result._id} //console.log("dd",cv); //delete result.__v;
+           callback(null, cv);
     });
 };
 /** fetch data **/
@@ -21,7 +18,7 @@ exports.getData = function (model, query, projection, options, callback) { //con
             return callback(err);
         }
         return callback(null, data);
-    });
+    }); //.select({email : 1, fullName : 1, password: 1});
 };
 
 /** fetch data **/
@@ -80,4 +77,41 @@ exports.deleteData_one = function (model, conditions, callback1) {
     };
 };
 
-//findOneAndUpdate
+exports.push_subcategories = function (model,conditions,data,callback){
+    console.log("dd",conditions); console.log("data",data);
+    //return callback(null,data);
+ model.update(conditions,{$addToSet:data},function(err,result) {
+     if (err){
+         return callback(error);
+     }else{
+      return callback(null,result);
+     }
+  });
+}
+
+var query = {_id : '5630a6c0d9d32ff90144f3d6'};
+var projection = {};
+var option = {};
+
+exports.getDatausingpopulate = function (model, query, projection, options, callback) {
+    model.find(query, projection,options).populate('subcategories').exec(function(err,result){
+        if(err){
+            throw err; //do something with error
+        } else {
+            callback(result);
+        }
+    });
+}
+/*
+model.find(query, projection, option)
+    .populate('products')
+    .exec(function(err, foundUser){
+        console.log("RESPONSE");
+        console.log(err);
+        console.log("RESPONSE1");
+        console.log(foundUser);
+        if(err){
+            throw err; //do something with error
+        } else {
+            callback(foundUser);
+        }*/
