@@ -6,7 +6,8 @@ var Ejs = require('ejs');
 var mongoose = require('mongoose');
 var Plugins = require('./plugins');
 var jwt= require('hapi-auth-jwt2');
-server.connection({ port: 2000 });
+server.connection({ port: 2002 });
+
 
 var privateKey = 'BbZJjyoXAdr8BUZuiKKARWimKfrSmQ6fv8kZ7OFfc';
 // Plugins, register hapi-auth-jwt to server
@@ -24,6 +25,8 @@ server.route({
         reply('Hello, world!');
     }
 });
+
+
 routes.forEach(function (api) {
     server.route(api);
 });

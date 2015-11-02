@@ -30,7 +30,7 @@ var insertcategory = { method:'GET',
 }
 
 var insertsubcategories = { method:'GET',
-    path:'/insertsubcategories',
+    path:'/api/category/insertsubcategories',
     config:{
         description:'insert category into db',
         handler: function(request,reply){
@@ -82,10 +82,12 @@ var subcategorieslist = { method:'GET',
     }
 }
 
-var allcategory = { method:'GET',
-    path:'/allcategory',
+var allcategory = {
+    method:'GET',
+    path:'/api/allcategory',
     config:{
         description:'category list',
+        tags: ['api','api categoty'],
         handler:function(error,reply){
             //console.log("kjhkjhkj");
             //reply("userlist");
@@ -95,6 +97,16 @@ var allcategory = { method:'GET',
                 else
                     reply(sucess);
             });
+        },
+        plugins: {
+            'hapi-swagger': {
+                responseMessages: [
+                    {code: 200, message: 'OK'},
+                    {code: 400, message: 'Bad Request'},
+                    {code: 404, message: 'Login Error'},
+                    {code: 500, message: 'Internal Server Error'}
+                ]
+            }
         }
     }
 }
