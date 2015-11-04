@@ -6,7 +6,7 @@ exports.setData = function (usermodel,data, callback) { //return callback(null,"
         else
            var result = resultData.toObject();
            var cv ={'id':result._id} //console.log("dd",cv); //delete result.__v;
-           callback(null, cv);
+          return callback(null, result);
     });
 };
 /** fetch data **/
@@ -19,6 +19,18 @@ exports.getData = function (model, query, projection, options, callback) { //con
         }
         return callback(null, data);
     }); //.select({email : 1, fullName : 1, password: 1});
+};
+
+/** fetch data with selected fileds **/
+exports.getDataSelectedFields = function (model, query, projection, options,selectedfields ,callback) { //console.log("DAO",model);
+
+    model.find(query, projection, options, function (err, data) {
+        if (err) {
+           return callback(err);
+        }else{
+            return callback(null, data);
+        }
+    }).select(selectedfields);
 };
 
 /** fetch data **/

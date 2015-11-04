@@ -14,7 +14,8 @@ var createuser = function(data,callbackRoute) {  //return callbackRoute(null,dat
     ],function (error, results) {
       if(error)
         return callbackRoute(error);
-      return callbackRoute(null,results);
+       else
+          return callbackRoute(null,results);
     });
 }
 var userlist= function(callbackRoute){

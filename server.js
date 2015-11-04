@@ -26,15 +26,15 @@ server.route({
     }
 });
 
-
+/** fetch all routes **/
 routes.forEach(function (api) {
     server.route(api);
 });
-//console.log(cipherToken);
+
 server.start(function () {
     console.log('Server running at:', server.info.uri);
     //console.log("aasas",server.auth.default('jwt'));
-    mongoose.connect('mongodb://localhost/Userdata');
+    mongoose.connect('mongodb://localhost/student');
 });
 
 var cipherToken = function (tokenData) {
