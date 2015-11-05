@@ -5,4 +5,5 @@ module.exports = {
     subcategories: require('./subcategories'),
     student: require('./student'),
     jobs: require('./jobs'),
+    admin: require('./admin'),
 };

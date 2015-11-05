@@ -8,11 +8,8 @@ var auth = function(data,callbackRoute) {
     async.waterfall([
         function(callback)
         {
-            DAO.loginDAO.getdata_withconditions(data,callback); /*{ $or:[ {'name':param}, {'nickname':param} ]}
-            var conditions = { $and:[{'email':}] }*/
-            //callback(null,data);
+            DAO.loginDAO.getdata_withconditions(data,callback);
         }
-
     ],function(error,result){
        if(error)
          return callbackRoute(error);

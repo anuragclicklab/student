@@ -24,8 +24,8 @@ var insertstudent = { method:'POST',
     config:{
         description:'insert new student',
         handler: function(request,reply){
-            //console.log("fjdwbkgfdsg",request.payload); //reply("dasasdasd");
-            controller.jobC.insertjobs(request.payload, function (error, success) {
+            //console.log("route",request.payload); //reply("dasasdasd");
+            controller.studentC.insertstudent(request.payload, function (error, success) {
                 if (error)
                 {
                     reply(error);

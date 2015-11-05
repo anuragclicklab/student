@@ -1,19 +1,18 @@
  var controller = require('../../controllers');
-var createuser = { method:'GET',
+var createuser = { method:'POST',
     path:'/createuser',
     config:{
         description:'insert into db',
         handler: function(request,reply){
-            //console.log("fjdwbkgfdsg",request.query);
-
-           controller.user.createuser(request.query, function (error, success) {
+            //console.log("route",request.payload); reply(request.payload);
+           controller.user.createuser(request.payload, function (error, success) {
                 if (error)
                 {
                      reply(error);
                 }else {
                     reply(success);
                 }
-            } );
+            });
         },
         /*validate: {
             payload: { fname: Joi.string().required().trim(),
@@ -43,6 +42,34 @@ var createuser = { method:'GET',
              reply(sucess);
          });
        }
+     }
+ }
+
+ var userdetaillist = { method:'GET',
+     path:'/userdetaillist',
+     config:{
+         description:'user list',
+         tags: ['api','all users details'],
+         handler:function(error,reply){
+             //console.log("kjhkjhkj");
+             //reply("userlist");
+             controller.user.userdetaillist(function (error,sucess){
+                 if(error)
+                     reply(error);
+                 else
+                     reply(sucess);
+             });
+         },
+         plugins: {
+             'hapi-swagger': {
+                 responseMessages: [
+                     {code: 200, message: 'OK'},
+                     {code: 400, message: 'Bad Request'},
+                     {code: 404, message: 'Login Error'},
+                     {code: 500, message: 'Internal Server Error'}
+                 ]
+             }
+         }
      }
  }
 
@@ -84,5 +111,5 @@ var createuser = { method:'GET',
      }
 
  }
-var abc = [createuser,userlist,updateuser,delete_data];
+var abc = [createuser,userlist,updateuser,delete_data,userdetaillist];
 module.exports = abc;

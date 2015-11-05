@@ -4,6 +4,7 @@ module.exports = {
     categoryDAO: require('./category/categoryDAO'),
     studentDAO: require('./student/studentDAO'),
     jobsDAO: require('./jobs/jobsDAO'),
+    adminDAO: require('./admin/adminDAO'),
 
 
 };

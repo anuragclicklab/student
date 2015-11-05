@@ -1,12 +1,13 @@
 /** Insert Data **/
-exports.setData = function (usermodel,data, callback) { //return callback(null,"sadasas");
+exports.setData = function (usermodel,data, callback) { //return callback(null,data);
     new usermodel(data).save(function (err, resultData) {
-        if(err)
+        if(err) {
             return callback(err);
-        else
+        }else{
            var result = resultData.toObject();
            var cv ={'id':result._id} //console.log("dd",cv); //delete result.__v;
           return callback(null, result);
+        }
     });
 };
 /** fetch data **/
@@ -90,8 +91,7 @@ exports.deleteData_one = function (model, conditions, callback1) {
 };
 
 exports.push_subcategories = function (model,conditions,data,callback){
-    console.log("dd",conditions); console.log("data",data);
-    //return callback(null,data);
+    console.log("dd",conditions); console.log("data",data); //return callback(null,data);
  model.update(conditions,{$addToSet:data},function(err,result) {
      if (err){
          return callback(error);
@@ -101,10 +101,6 @@ exports.push_subcategories = function (model,conditions,data,callback){
   });
 }
 
-var query = {_id : '5630a6c0d9d32ff90144f3d6'};
-var projection = {};
-var option = {};
-
 exports.getDatausingpopulate = function (model, query, projection, options, callback) {
     model.find(query, projection,options).populate('subcategories').exec(function(err,result){
         if(err){
@@ -113,17 +109,14 @@ exports.getDatausingpopulate = function (model, query, projection, options, call
             callback(result);
         }
     });
-}
-/*
-model.find(query, projection, option)
-    .populate('products')
-    .exec(function(err, foundUser){
-        console.log("RESPONSE");
-        console.log(err);
-        console.log("RESPONSE1");
-        console.log(foundUser);
+};
+
+exports.userdetaillist = function (model, query, projection, options, callback) {
+    model.find(query, projection,options).populate('studentId').populate('adminId').exec(function(err,result){
         if(err){
             throw err; //do something with error
         } else {
-            callback(foundUser);
-        }*/
+            callback(result);
+        }
+    });
+}

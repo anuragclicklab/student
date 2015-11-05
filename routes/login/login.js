@@ -18,18 +18,29 @@ var auth ={
         config:{
         description:'check users details',
             handler:function(request,reply) {
-            console.log("ddd",request.payload);//reply(request.payload);
-            controller.login.auth(request.payload,function(error,success){
-             if(error)
-             return reply(error);
-             else
-             return reply(success);
-             });
+            //console.log("ddd",request.payload);reply(request.payload);
+            controller.login.auth(request.payload,function(error,success) {
+                if (error) {
+                   return reply(error);
+                } else {
+                    if(success.length>0)
+                    {
+                        var msg={'status':true,'data':success};
+                        reply.view("login/test.ejs",msg);
+                    }else {
+                        var msg={'status':false,'data':success}
+                        reply.view("login/login.ejs",{'msg':msg});
+                    }
+                     //return reply(success);
+                }
+            });
         },
         validate: {
             payload: {
                 email:Joi.string().email().required().trim(),
                 password: Joi.string().required().trim(),
+                usertype: Joi.string().required().trim(),
+
             },failAction:util.failActionFunction
 
             /*failAction:function(request, reply, source, error){

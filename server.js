@@ -34,7 +34,7 @@ routes.forEach(function (api) {
 server.start(function () {
     console.log('Server running at:', server.info.uri);
     //console.log("aasas",server.auth.default('jwt'));
-    mongoose.connect('mongodb://localhost/student');
+    mongoose.connect('mongodb://localhost/student1');
 });
 
 var cipherToken = function (tokenData) {
