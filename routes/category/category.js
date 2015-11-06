@@ -1,42 +1,49 @@
 var controller = require('../../controllers');
-var insertcategory = { method:'GET',
+var Joi        = require('joi');
+var util       = require('../../Utilities/utili');
+var insertcategory = { method:'POST',
     path:'/insertcategory',
     config:{
         description:'insert category into db',
+        tags: ['api','api insert Category'],
         handler: function(request,reply){
-            //console.log("fjdwbkgfdsg",request.query);
-            //reply("dasasdasd");
-           controller.category.insertcategory(request.query, function (error, success) {
+           // console.log("fjdwbkgfdsg",request.payload);//reply("dasasdasd",request.payload);
+           controller.category.insertcategory(request.payload, function (error, success) {
                 if (error)
                 {
                      reply(error);
                 }else {
                     reply(success);
                 }
-            } );
+            });
         },
-        /*validate: {
-            payload: { fname: Joi.string().required().trim(),
-                email: Joi.string().email().required().trim(),
-            },
-            failAction: function (request, reply, source, error) {
-
-                error.output.payload.message = 'custom';
-                //return reply(error).code(400);
-                return reply(error);
+        validate: {
+            payload: {
+                categoryName:Joi.string().required().trim(),
+                status:Joi.string().required().trim(),
+            },failAction:util.failActionFunction
+        },
+        plugins: {
+            'hapi-swagger': {
+                responseMessages: [
+                    {code: 200, message: 'OK'},
+                    {code: 400, message: 'Bad Request'},
+                    {code: 404, message: 'Login Error'},
+                    {code: 500, message: 'Internal Server Error'}
+                ]
             }
-        }*/
+        }
     }
 }
 
-var insertsubcategories = { method:'GET',
-    path:'/api/category/insertsubcategories',
+var insertsubcategories = { method:'POST',
+    path:'/insertsubcategories',
     config:{
         description:'insert category into db',
+        tags: ['api','api insert subcategories'],
         handler: function(request,reply){
-            //console.log("fjdwbkgfdsg",request.query);
-            //reply("insertsubcategories");
-            controller.category.insertsubcategories(request.query, function (error, success) {
+            //console.log("fjdwbkgfdsg",request.payload);reply("insertsubcategories");
+            controller.category.insertsubcategories(request.payload, function (error, success) {
                 if (error)
                 {
                     reply(error);
@@ -44,6 +51,23 @@ var insertsubcategories = { method:'GET',
                     reply(success);
                 }
             });
+        },
+        validate: {
+            payload: {
+                categoryName:Joi.string().required().trim(),
+                parentcategoryId:Joi.string().required().trim(),
+                status:Joi.string().required().trim(),
+            },failAction:util.failActionFunction
+        },
+        plugins: {
+            'hapi-swagger': {
+                responseMessages: [
+                    {code: 200, message: 'OK'},
+                    {code: 400, message: 'Bad Request'},
+                    {code: 404, message: 'Login Error'},
+                    {code: 500, message: 'Internal Server Error'}
+                ]
+            }
         }
     }
 }

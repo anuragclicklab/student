@@ -5,7 +5,7 @@ var Path = require('path');
 
 /** main category **/
 var insertcategory = function(data,callbackRoute) {  //return callbackRoute(null,data);
-    async.waterfall([
+   async.waterfall([
         function (callback)
         {
             DAO.categoryDAO.insertcategory(data,callback);
@@ -20,17 +20,17 @@ var insertcategory = function(data,callbackRoute) {  //return callbackRoute(null
 
 /** main category **/
 var insertsubcategories = function(data,callbackRoute) {  //return callbackRoute(null,data);
-    var data_array = {'categoryName':data.categoryName,'status':data.status,'parentcategory':data.id};
+    var data_array = {'categoryName':data.categoryName,'status':data.status,'parentcategory':data.parentcategoryId};
     async.waterfall([
         function (callback)
         {
             DAO.categoryDAO.insertsubcategories(data_array,callback);
             //return callbackRoute(null,data);
         },function(insertedarr,callback)
-        {   var new_insertedarr ={'_id':data.id,'subcat_id':insertedarr.id}
-            //console.log("cc",insertedarr);
+        {   var new_insertedarr ={'_id':data.parentcategoryId,'subcat_id':insertedarr._id}
+            //console.log("insertedarr",insertedarr);console.log("new_insertedarr",new_insertedarr);
             DAO.categoryDAO.pushsubcategories(new_insertedarr,callback);
-            //return callback(null,"okcc");
+            //return callback(null,insertedarr);
         }
     ],function (error, results) {
         if(error) {

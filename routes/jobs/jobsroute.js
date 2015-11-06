@@ -1,5 +1,6 @@
 var controller = require('../../controllers');
-
+var Joi        = require('joi');
+var util       = require('../../Utilities/utili');
 var studentlist = { method:'GET',
     path:'/studentlist',
     config:{
@@ -33,6 +34,15 @@ var insertjobs = { method:'POST',
                     reply(success);
                 }
             } );
+        },
+        validate: {
+            payload: {
+                companyName:Joi.string().required().trim(),
+                companydetails:Joi.string().required().trim(),
+                backlog:Joi.string().required().trim(),
+                jobvVcancies:Joi.string().required().trim(),
+                status:Joi.string().required().trim(),
+            },failAction:util.failActionFunction
         },
         plugins: {
             'hapi-swagger': {

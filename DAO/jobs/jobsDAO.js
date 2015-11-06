@@ -14,8 +14,7 @@ var getalljobs =function(callback){ console.log("getallcategory");
 };
 
 var studentjobs = function(data,callback){
-    var query ={backlog:{$gte:5}};
-    DaoManager.getData(models.jobs,query,'','',callback);
+    DaoManager.getData(models.jobs,data,'','',callback);
 }
 module.exports ={
     insertjobs:insertjobs,

@@ -40,10 +40,11 @@ var studentjobs= function(data,callbackRoute){
         function (callback)
         {
            return DAO.studentDAO.getstudentbackloc(data,callback);
-            //return callbackRoute(null,"studentjobsC");
+            //return callbackRoute(null,data);
         },function(studentbacklocks,callback){
-            var jj = studentbacklocks[0].totalbacklocks;
-            return DAO.jobsDAO.studentjobs(data,callback)
+           // {$gte:5}
+            var jj = {'backlog':{$gte:studentbacklocks[0].totalbacklocks}};
+            return DAO.jobsDAO.studentjobs(jj,callback);
             //return callbackRoute(null,studentbacklocks);
         }
 

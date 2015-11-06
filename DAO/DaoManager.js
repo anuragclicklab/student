@@ -12,19 +12,20 @@ exports.setData = function (usermodel,data, callback) { //return callback(null,d
 };
 /** fetch data **/
 exports.getData = function (model, query, projection, options, callback) { //console.log("DAO",model);
+    console.log("DAO",query);
 
     model.find(query, projection, options, function (err, data) {
         if (err) {
             logger.error("Get Data", err);
             return callback(err);
+        }else{
+            return callback(null, data);
         }
-        return callback(null, data);
-    }); //.select({email : 1, fullName : 1, password: 1});
-};
 
+    });
+};
 /** fetch data with selected fileds **/
 exports.getDataSelectedFields = function (model, query, projection, options,selectedfields ,callback) { //console.log("DAO",model);
-
     model.find(query, projection, options, function (err, data) {
         if (err) {
            return callback(err);
