@@ -6,6 +6,7 @@ var Ejs = require('ejs');
 var mongoose = require('mongoose');
 var Plugins = require('./plugins');
 var jwt= require('hapi-auth-jwt2');
+var Config = require('./config/config.js');
 server.connection({ port: 2002 });
 
 
@@ -33,7 +34,7 @@ routes.forEach(function (api) {
 
 server.start(function () {
     console.log('Server running at:', server.info.uri);
-    //console.log("aasas",server.auth.default('jwt'));
+    console.log("Config",Config.Constants.STUDENT_STATUS.PURSUING);
     mongoose.connect('mongodb://localhost/student1');
 });
 
@@ -47,5 +48,5 @@ server.views({
     },
     relativeTo: __dirname,
     path: './Views'
-});
+}); 
 
