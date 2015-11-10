@@ -2,16 +2,38 @@ var async = require('async');
 var DAO = require('../../DAO');
 var mongoose = require('mongoose');
 var Path = require('path');
-
-
+var hapi = require('hapi');
+var fs = require('fs');
+var Config = require('../../config/config.js');
 var createuser = function(data,callbackRoute) {  //return callbackRoute(null,data);
    async.waterfall([
        function(callback)
-       {
+       {  //console.log("path2",__dirname);
+          if (data.userImage) {
+               var name = data.userImage.hapi.filename;
+               var path = __dirname + "/../../uploads/" + name;
+               var userImage = fs.createWriteStream(path);
+              userImage.on('error', function (err) {
+                   console.error(err)
+               });
+              data.userImage.pipe(userImage);
+              data.userImage.on('end', function (err) {
+                  var ret = {
+                      filename: data.userImage.hapi.filename,
+                      headers: data.userImage.hapi.headers
+                  }
+                  //reply(JSON.stringify(ret));
+              });
+              var insertfilename = {filename:name };
+           }
+           callback(null,insertfilename);
+       },
+       function(insertfilename,callback)
+       { //console.log("insertfilename",insertfilename);
             if(data.type=='student') {
-             var userData = {email: data.email, password: data.password, status: 'Enabled', type: 'student'};
+             var userData = {email: data.email, password: data.password, status: 'Enabled', type: 'student' ,fileName : insertfilename.filename};
             }else if(data.type=='admin'){
-                var userData = {email: data.email, password: data.password, status: 'Enabled', type: 'admin'};
+                var userData = {email: data.email, password: data.password, status: 'Enabled', type: 'admin',fileName : insertfilename.filename};
             }
            callback(null,userData);
        },

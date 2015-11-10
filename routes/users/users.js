@@ -3,6 +3,11 @@ var createuser = { method:'POST',
     path:'/createuser',
     config:{
         description:'insert into db',
+        payload: {
+            output: 'stream',
+            parse: true,
+            allow: 'multipart/form-data'
+        },
         handler: function(request,reply){
             //console.log("route",request.payload); reply(request.payload);
            controller.user.createuser(request.payload, function (error, success) {
