@@ -41,9 +41,14 @@ var studentjobs= function(data,callbackRoute){
         {
            return DAO.studentDAO.getstudentbackloc(data,callback);
             //return callbackRoute(null,data);
+
         },function(studentbacklocks,callback){
            // {$gte:5}
-            var jj = {'backlog':{$gte:studentbacklocks[0].totalbacklocks}};
+            //console.log("student data",studentbacklocks);
+            var jj = {'backlog':{$gte:studentbacklocks[0].totalbacklocks },
+                      department:studentbacklocks[0].department,
+                      minimumpercentage:{$lte:studentbacklocks[0].percentage }
+                     };
             return DAO.jobsDAO.studentjobs(jj,callback);
             //return callbackRoute(null,studentbacklocks);
         }

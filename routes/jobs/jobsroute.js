@@ -1,6 +1,9 @@
 var controller = require('../../controllers');
 var Joi        = require('joi');
 var util       = require('../../Utilities/utili');
+var Config = require('../../config/config.js');
+var configConstants   =  Config.Constants;
+var studentDepartment =  configConstants.STUDENT_DEPARTMENT;
 var studentlist = { method:'GET',
     path:'/studentlist',
     config:{
@@ -40,8 +43,17 @@ var insertjobs = { method:'POST',
                 companyName:Joi.string().required().trim(),
                 companydetails:Joi.string().required().trim(),
                 backlog:Joi.string().required().trim(),
-                jobvVcancies:Joi.string().required().trim(),
+                jobvVcancies:Joi.number().integer().required(),
+                minimumpercentage:Joi.number().integer().required(),
+                maximumpercentage:Joi.number().integer().required(),
                 status:Joi.string().required().trim(),
+                department: Joi.string().required().valid(studentDepartment.CSE,
+                    studentDepartment.ECE,
+                    studentDepartment.ME,
+                    studentDepartment.IT
+                ),
+                department1:Joi.array().required().unique(),
+
             },failAction:util.failActionFunction
         },
         plugins: {

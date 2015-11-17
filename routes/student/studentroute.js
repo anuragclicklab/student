@@ -1,6 +1,11 @@
-var controller = require('../../controllers');
-var Joi        = require('joi');
-var util       = require('../../Utilities/utili');
+var controller =  require('../../controllers');
+var Joi        =  require('joi');
+var util       =  require('../../Utilities/utili');
+var Config     =  require('../../config/config.js');
+var configConstants = Config.Constants;
+var studentStatus = configConstants.STUDENT_STATUS;
+var studentDepartment = configConstants.STUDENT_DEPARTMENT;
+
 var studentlist = { method:'GET',
     path:'/studentlist',
     config:{
@@ -46,8 +51,18 @@ var insertstudent = { method:'POST',
                 totalbacklocks: Joi.number().required(),
                 studentclass: Joi.string().required().trim(),
                 rollName: Joi.number().required(),
-                status: Joi.string().required().trim(),
-
+                //status: Joi.string().required().trim(),
+                status: Joi.string().required().valid(  studentStatus.ENABLED,
+                                                        studentStatus.DISABLED,
+                                                        studentStatus.PURSUING,
+                                                        studentStatus.PASSOUT
+                 ),
+                department: Joi.string().required().valid( studentDepartment.CSE,
+                                                           studentDepartment.ECE,
+                                                           studentDepartment.ME,
+                                                           studentDepartment.IT
+                ),
+                percentage:Joi.number().required(),
             },failAction:util.failActionFunction
         },
         plugins: {

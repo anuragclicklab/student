@@ -21,7 +21,7 @@ var getstudent =function(callback){ //console.log("getcategory");
 var getstudentbackloc =function(data,callback){ //console.log("getstudentbackloc",data);
     var query          =  {"_id": data.id};
     //var query          =  {$and: [{"_id": data.id},{"totalbacklocks":{ $gte: 3 }}]};//var query ={};
-    var selectedfields =  {_id : 1, fullName : 1, totalbacklocks: 1,status:1};
+    var selectedfields =  {_id : 1, fullName : 1, totalbacklocks: 1,status:1,department:1,percentage:1};
     DaoManager.getDataSelectedFields(models.student,query,'','',selectedfields,callback);
 };
 

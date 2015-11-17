@@ -12,6 +12,8 @@ var swaggerOptions = {
     apiVersion:"0.4.0",//Pack.version
     pathPrefixSize: 2
 };
+var Config = require('../config/config.js');
+var jwt = require('hapi-auth-jwt2');
 var pluginsArray = [
     {
         register: require('hapi-swagger'),
@@ -50,12 +52,12 @@ var pluginsArray = [
 
         }
     },
-    {
+    /*{
         register:  require('hapi-auth-jwt2'),
         options: {
 
         }
-    },
+    },*/
 ];
 
 module.exports=pluginsArray;

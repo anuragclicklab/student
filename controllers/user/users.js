@@ -25,13 +25,15 @@ var createuser = function(data,callbackRoute) {  //return callbackRoute(null,dat
                   //reply(JSON.stringify(ret));
               });
               var insertfilename = {filename:name };
-           }
+           }else{
+              var insertfilename = {filename:null };
+          }
            callback(null,insertfilename);
        },
        function(insertfilename,callback)
        { //console.log("insertfilename",insertfilename);
             if(data.type=='student') {
-             var userData = {email: data.email, password: data.password, status: 'Enabled', type: 'student' ,fileName : insertfilename.filename};
+             var userData = {email: data.email, password: data.password, status: 'Enabled', type: 'student' ,fileName : insertfilename.filename ,department:data.department,percentage:data.percentage};
             }else if(data.type=='admin'){
                 var userData = {email: data.email, password: data.password, status: 'Enabled', type: 'admin',fileName : insertfilename.filename};
             }
@@ -52,6 +54,8 @@ var createuser = function(data,callbackRoute) {  //return callbackRoute(null,dat
                                   endYear:data.endYear,
                                   totalbacklocks:data.totalbacklocks,
                                   status:data.status,
+                                  department:data.department,
+                                  percentage:data.percentage
                };
            }else if(data.type=='admin'){
                var studentData ={ userId:resultdata._id,

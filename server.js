@@ -6,12 +6,22 @@ var Ejs = require('ejs');
 var mongoose = require('mongoose');
 var Plugins = require('./plugins');
 var jwt= require('hapi-auth-jwt2');
+//var jwt= require('jsonwebtoken');
 var Config = require('./config/config.js');
 var fs = require('fs');
 server.connection({ port: 2002 });
 
 
-var privateKey = 'BbZJjyoXAdr8BUZuiKKARWimKfrSmQ6fv8kZ7OFfc';
+var privateKey = Config.jwt_privateKey;
+//var obj   = { id:123,"name":"Charlie" }; // object/info you want to sign
+//var token = jwt.sign(obj, privateKey);
+var profile = {
+    first_name: 'John',
+    last_name: 'Doe',
+    email: 'john@doe.com',
+    id: 123
+};
+//var token = jwt.sign(profile, privateKey, { expiresInMinutes: 60*5 });
 // Plugins, register hapi-auth-jwt to server
 server.register(Plugins, function (err) {
     if (err) {
@@ -35,7 +45,7 @@ routes.forEach(function (api) {
 
 server.start(function () {
     console.log('Server running at:', server.info.uri);
-    //console.log("Config",Config.Constants.STUDENT_STATUS.PURSUING);
+    //console.log("token",token);
     mongoose.connect('mongodb://localhost/student1');
 });
 
