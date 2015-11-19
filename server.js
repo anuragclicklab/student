@@ -5,23 +5,25 @@ var server = new hapi.Server();
 var Ejs = require('ejs');
 var mongoose = require('mongoose');
 var Plugins = require('./plugins');
-var jwt= require('hapi-auth-jwt2');
-//var jwt= require('jsonwebtoken');
+//var jwt= require('hapi-auth-jwt2');
+var jwt= require('jsonwebtoken');
 var Config = require('./config/config.js');
 var fs = require('fs');
-server.connection({ port: 2002 });
+var Token = require('./Utilities/TokenManager');
+var log4js = require('log4js');
+var logger = log4js.getLogger();
+logger.debug("Some debug messages");
+server.connection({ port: 2007 });
 
-
-var privateKey = Config.jwt_privateKey;
-//var obj   = { id:123,"name":"Charlie" }; // object/info you want to sign
-//var token = jwt.sign(obj, privateKey);
+var timestamp_new = new Date().getTime();
 var profile = {
     first_name: 'John',
     last_name: 'Doe',
     email: 'john@doe.com',
-    id: 123
+    _id: "563af35f026aff2802e4ba82",
+    timestamp:timestamp_new
 };
-//var token = jwt.sign(profile, privateKey, { expiresInMinutes: 60*5 });
+var token = Token.generateToken(profile); //jwt.sign(profile, privateKey);
 // Plugins, register hapi-auth-jwt to server
 server.register(Plugins, function (err) {
     if (err) {
@@ -41,6 +43,7 @@ server.route({
 /** fetch all routes **/
 routes.forEach(function (api) {
     server.route(api);
+    //console.log(api);
 });
 
 server.start(function () {

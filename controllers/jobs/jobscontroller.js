@@ -3,11 +3,26 @@ var DAO = require('../../DAO');
 var mongoose = require('mongoose');
 var Path = require('path');
 
-var insertjobs = function(data,callbackRoute) {  //return callbackRoute(null,data);
+var insertjobs = function(data1,accesstoken,callbackRoute) {  //return callbackRoute(null,data);
+    var dta =data1;
     async.waterfall([
         function (callback)
         {
-            DAO.jobsDAO.insertjobs(data,callback);
+          DAO.jobsDAO.checkaccesstoken(accesstoken,callback);
+           //console.log("ccc",accesstoken);
+           // callbackRoute(null);
+        },
+        function (accessTokenData,callback){
+            if(accessTokenData.length==0)
+            {
+                callbackRoute(null,"Access is denied");
+            }else{
+                callback(null,data1);
+            }
+        },
+        function (dd,callback)
+        {   //console.log("dd",dta);
+            DAO.jobsDAO.insertjobs(dta,callback);
             //return callbackRoute(null,"ccc");
         }
     ],function (error, results) {

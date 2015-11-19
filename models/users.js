@@ -14,6 +14,8 @@ var user = new Schema({
                                 Config.Constants.USER_TYPE.STUDENT
                                ]
     },
+    accessToken:{'type':String,required: false,default: null},
+    deviceToken:{'type':String,required: false,default: null},
     createdAt: {type: Date, default: Date.now}
 });
 

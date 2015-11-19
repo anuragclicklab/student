@@ -5,8 +5,10 @@ var Path = require('path');
 var hapi = require('hapi');
 var fs = require('fs');
 var Config = require('../../config/config.js');
+var Token = require('../../Utilities/TokenManager');
 var createuser = function(data,callbackRoute) {  //return callbackRoute(null,data);
-   async.waterfall([
+    var newToken=null;
+    async.waterfall([
        function(callback)
        {  //console.log("path2",__dirname);
           if (data.userImage) {
@@ -44,6 +46,16 @@ var createuser = function(data,callbackRoute) {  //return callbackRoute(null,dat
            DAO.userDAO.insertuser(userData,callback);
             //return callbackRoute(null,userData);
         },
+       function (resData,callback)
+       { //console.log("resDF",resData);
+           var TokenData = {_id:resData._id,email:resData.email};
+           newToken  =  Token.generateToken(TokenData);
+           //console.log("insert",TokenData); //console.log("token",Token.generateToken(TokenData));
+           var condition1 = {_id:resData._id};
+           var dataToken ={'accessToken':newToken};
+           DAO.userDAO.updateToken(condition1,dataToken,callback);
+           //callback(null,resData);
+       },
         function(resultdata,callback){
            if(data.type=='student') {
                var studentData ={ userId:resultdata._id,
@@ -84,10 +96,12 @@ var createuser = function(data,callbackRoute) {  //return callbackRoute(null,dat
             //callback(null,condition1);
         },
     ],function (error, results) {
-      if(error)
+      if(error) {
         return callbackRoute(error);
-       else
-          return callbackRoute(null,results);
+      }else{
+          var res = {'status':200,'accessToken':newToken};
+          return callbackRoute(null,res);
+      }
     });
 }
 var userlist= function(callbackRoute){

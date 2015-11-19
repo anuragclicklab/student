@@ -7,6 +7,8 @@ var studentStatus     =  configConstants.STUDENT_STATUS;
 var studentDepartment =  configConstants.STUDENT_DEPARTMENT;
 var userType          =  Config.Constants.USER_TYPE;
 var studentStatus     =  Config.Constants.STUDENT_STATUS
+
+
 var createuser = { method:'POST',
     path:'/createuser',
     config:{
@@ -166,5 +168,6 @@ var createuser = { method:'POST',
      }
 
  }
-var abc = [createuser,userlist,updateuser,delete_data,userdetaillist];
+
+var abc = [createuser,userlist,updateuser,delete_data,userdetaillist,];
 module.exports = abc;

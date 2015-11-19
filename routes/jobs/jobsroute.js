@@ -28,18 +28,34 @@ var insertjobs = { method:'POST',
         description:'insert new job ',
         tags: ['api','api insert jobs'],
         handler: function(request,reply){
-           // console.log("fjdwbkgfdsg",request.payload); reply("insertjobs routes");
-            controller.jobC.insertjobs(request.payload, function (error, success) {
+           //console.log("fjdwbkgfdsg",request);
+            /*var data = { 'companyName':request.payload.companyName,
+                'companydetails':request.payload.companydetails,
+                'backlog':request.payload.backlog,
+                'jobvVcancies':request.payload.jobvVcancies,
+                'minimumpercentage':request.payload.minimumpercentage,
+                'maximumpercentage':request.payload.maximumpercentage,
+                'status':request.payload.status,
+                'department':request.payload.department,
+                'department1':request.payload.department1,
+                'accesstoken':request.headers.accesstoken,
+            };*/
+            var accesstoken = request.headers.accesstoken;
+            //console.log("headers",data); reply(request.payload);
+            controller.jobC.insertjobs(request.payload,accesstoken ,function (error, success) {
                 if (error)
                 {
                     reply(error);
                 }else {
                     reply(success);
                 }
-            } );
+            });
         },
         validate: {
-            payload: {
+                   headers: Joi.object({
+                    accesstoken: Joi.string().required()
+                }).unknown(), //Allow unknown headers
+               payload: {
                 companyName:Joi.string().required().trim(),
                 companydetails:Joi.string().required().trim(),
                 backlog:Joi.string().required().trim(),
@@ -53,11 +69,14 @@ var insertjobs = { method:'POST',
                     studentDepartment.IT
                 ),
                 department1:Joi.array().required().unique(),
+                //accessToken:Joi.string().required(),
 
-            },failAction:util.failActionFunction
+            },
+            failAction:util.failActionFunction
         },
         plugins: {
             'hapi-swagger': {
+                //payloadType: 'form',
                 responseMessages: [
                     {code: 200, message: 'OK'},
                     {code: 400, message: 'Bad Request'},
@@ -84,6 +103,11 @@ var allcategory = {
                 else
                     reply(sucess);
             });
+        },
+        validate: {
+            headers: Joi.object({
+                accesstoken: Joi.string().required()
+            }).unknown() //Allow unknown headers
         },
         plugins: {
             'hapi-swagger': {

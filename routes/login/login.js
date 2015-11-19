@@ -16,22 +16,25 @@ var auth ={
     method:'POST',
         path:'/auth',
         config:{
-        description:'check users details',
+        description:'login',
             handler:function(request,reply) {
             //console.log("ddd",request.payload);reply(request.payload);
             controller.login.auth(request.payload,function(error,success) {
                 if (error) {
                    return reply(error);
                 } else {
-                    if(success.length>0)
-                    {
+                   /* if(success.length>0)
+                    { //console.log("if");
                         var msg={'status':true,'data':success};
-                        reply.view("login/test.ejs",msg);
-                    }else {
+                        //reply.view("login/test.ejs",msg);
+                        return reply(success);
+                    }else { //console.log("else");
                         var msg={'status':false,'data':success}
-                        reply.view("login/login.ejs",{'msg':msg});
-                    }
-                     //return reply(success);
+                        //reply.view("login/login.ejs",{'msg':msg});
+                        return reply(msg);
+                    }*/
+
+                    return reply(success);
                 }
             });
         },
@@ -54,4 +57,5 @@ var auth ={
         }
     }
 }
+
 module.exports=[login,auth];

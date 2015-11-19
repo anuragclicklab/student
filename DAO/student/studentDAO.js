@@ -25,9 +25,16 @@ var getstudentbackloc =function(data,callback){ //console.log("getstudentbackloc
     DaoManager.getDataSelectedFields(models.student,query,'','',selectedfields,callback);
 };
 
+var getstudent_backloc =function(data,callback){ //console.log("student ll",data);
+    var conditions1 = {"totalbacklocks":{$gte:data}};
+    //callback(null,"dsada");
+    DaoManager.getData(models.student,conditions1,'','',callback);
+};
+
 module.exports ={
     insertstudent:insertstudent,
     getstudent:getstudent,
     getstudentbackloc:getstudentbackloc,
+    getstudent_backloc:getstudent_backloc,
 
 }

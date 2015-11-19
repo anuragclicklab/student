@@ -1,3 +1,4 @@
+var Joi        = require('joi');
 var failActionFunction = function(request, reply, source, error){
     if (error.isBoom) {
 
@@ -32,8 +33,10 @@ var failActionFunction = function(request, reply, source, error){
     return reply(error);
 
 }
-
+var authorizeHeader = Joi.object({
+    accesstoken: Joi.string().required(),
+}).unknown();
 module.exports = {
-    failActionFunction: failActionFunction,
+    failActionFunction: failActionFunction,authorizeHeader:authorizeHeader
 
 }

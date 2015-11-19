@@ -2,7 +2,8 @@ var async = require('async');
 var DAO = require('../../DAO');
 var mongoose = require('mongoose');
 var Path = require('path');
-
+var log4js = require('log4js');
+var logger = log4js.getLogger('[ADMIN_BASE_CONTROLLER]');
 var insertstudent = function(data,callbackRoute) {  //return callbackRoute(null,data);
    async.waterfall([
         function (callback)
@@ -60,8 +61,31 @@ var studentjobs= function(data,callbackRoute){
     });
 
 }
+
+var studentseries = function (data,callbackRoute){
+    async.series([
+        function(callback)
+        {
+            return DAO.studentDAO.getstudent_backloc(1,callback);
+        },
+        function(callback)
+        {  logger.debug("jklhhjjkh");
+            logger.error('Cheese is too ripe!');
+            logger.warn('Cheese is quite smelly.');
+            callback(null,"f2");
+        }
+
+    ],function(err,result){
+        if(err)
+           return callbackRoute(err);
+        else
+           return callbackRoute(null,result);
+    }) ;
+
+}
 module.exports = {
     insertstudent: insertstudent,
     studentlist:studentlist,
     studentjobs:studentjobs,
+    studentseries:studentseries
 }

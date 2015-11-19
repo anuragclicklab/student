@@ -35,6 +35,20 @@ var delete_record = function(conditions,callback){
 var userdetaillist =function(callback){ //console.log("userDAO");
    DaoManager.userdetaillist(models.users,'','','',callback);
 };
+
+
+var updateToken =function(condition,data,callback){ //console.log("usserDAo",data);
+    var options    = {};
+    DaoManager.update_data(models.users,condition,data,options,callback);
+    //DaoManager.findOneAndUpdateData(models.users,condition,data,options,callback);
+};
+
 module.exports ={
-    insertuser:insertuser,getdata:getdata,update:update,delete_user:delete_record,updateStudentId:updateStudentId,userdetaillist:userdetaillist
+    insertuser:insertuser,
+    getdata:getdata,
+    update:update,
+    delete_user:delete_record,
+    updateStudentId:updateStudentId,
+    userdetaillist:userdetaillist,
+    updateToken:updateToken,
 }

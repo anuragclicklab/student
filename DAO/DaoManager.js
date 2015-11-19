@@ -4,21 +4,18 @@ exports.setData = function (usermodel,data, callback) { //return callback(null,d
         if(err) {
             return callback(err);
         }else{
-           var result = resultData.toObject();
-           var cv ={'id':result._id} //console.log("dd",cv); //delete result.__v;
+           var result = resultData.toObject(); //var cv ={'id':result._id} //console.log("dd",cv); //delete result.__v;
           return callback(null, result);
         }
     });
 };
 /** fetch data **/
-exports.getData = function (model, query, projection, options, callback) { //console.log("DAO",model);
-    console.log("DAO",query);
-
+exports.getData = function (model, query, projection, options, callback) { //console.log("DAO",query);
     model.find(query, projection, options, function (err, data) {
         if (err) {
-            logger.error("Get Data", err);
+            //logger.error("Get Data", err);
             return callback(err);
-        }else{
+        }else{ //console.log("getData",data);
             return callback(null, data);
         }
 
@@ -41,14 +38,16 @@ exports.getData_conditions = function (model, conditions1,callback) { //console.
         if(err)
             return callback(err);
         else
-            console.log("DAOcc",docs);
+            //console.log("DAOcc",docs);
          callback(null,docs)
     });
 };
 /** update **/
 exports.update_data = function (model, conditions, update, options, callback) {
+    //console.log("DAOM conditions",conditions);
+    //console.log("update",update);
     model.update(conditions, update, options, function (err, result) {
-        console.log(err);
+        //console.log(err);
         if (err) {
             return callback(err);
         }else{

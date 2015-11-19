@@ -111,6 +111,24 @@ var studentjobs = {
     }
 }
 
+var studentseries = {
+    method:'GET',
+    path:'/studentseries',
+    config:{
+        description:'Student Series ',
+        tags:['api','student series'],
+        handler:function(res,reply){
+          //reply("sadasasd");
+            controller.studentC.studentseries(res.query,function(error,success){
+                if(error)
+                    reply(error);
+                else
+                  reply(success);
+            });
+        }
+    }
+}
+
 //var abc        = [insertcategory,category,insertsubcategories,subcategorieslist,allcategory];
-var module_arr = [studentlist,insertstudent,studentjobs];
+var module_arr = [studentlist,insertstudent,studentjobs,studentseries];
 module.exports = module_arr;
