@@ -63,16 +63,30 @@ var studentjobs= function(data,callbackRoute){
 }
 
 var studentseries = function (data,callbackRoute){
+    var studentlist =[]
     async.series([
         function(callback)
         {
-            return DAO.studentDAO.getstudent_backloc(1,callback);
+             DAO.studentDAO.getstudent_backloc(4,function(error,data){
+                 if(error){
+                   callback(error);
+                 }else {
+                     studentlist= data; //console.log("sss",studentlist);
+                     callback(null,studentlist);
+                 }
+             });
         },
         function(callback)
-        {  logger.debug("jklhhjjkh");
-            logger.error('Cheese is too ripe!');
-            logger.warn('Cheese is quite smelly.');
-            callback(null,"f2");
+        {
+            /*async.forEachSeries(studentlist.length,function(i,next) {
+                console.log("sss",studentlist[i].id,next);
+
+            },callback); */
+
+            async.eachSeries(studentlist,function iterator(item, callback) {
+                console.log("sss",item);
+
+            });
         }
 
     ],function(err,result){
